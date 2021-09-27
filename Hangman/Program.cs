@@ -57,7 +57,7 @@ namespace Hangman
                 char[] copy = arrSecretWord;                
 
                 
-                Console.Write("Please enter a letter or word to guess: ");
+                Console.Write("Please enter a letter or a swedish word to guess: ");
                                
                 //Input a guess               
                 guessWord = Console.ReadLine().ToUpper();
