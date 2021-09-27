@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Hangman
@@ -15,7 +16,7 @@ namespace Hangman
             char[] arrSecretWord = SecretWordList.SecretWord().ToCharArray();   //Convert "secretWord" to char array
 
             string guessWord;
-            char guessChar;
+            char guessChar = '0';
             string secretWord = new string(arrSecretWord);
             int guessCount = 0, guessLimit = 10;
 
@@ -38,7 +39,7 @@ namespace Hangman
             {
                 tempString = tempString.Insert(i, "_");
             }
-            arrTestWord = tempString.ToCharArray();
+            arrTestWord = tempString.ToCharArray();                      
 
             //Show secret word
             /*
@@ -108,56 +109,56 @@ namespace Hangman
 
                             }
                         }
-                    }
+                    }                    
+                }
 
-                    //Guess counting
-                    if (right != true)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nYour guess is incorrect.");
-                        Console.ResetColor();
-                        if (trigger)         //True if wrong char has not been used
-                        {
-                            wrongGuessedChar.Append(guessChar);
-                            guessCount++;                            
-                        }
-                        trigger = true;
-                    }
-                    else
-                    {
-                        i--;
-                        right = false;
-                    }
-
-                    //Guess counting
-                    if (guessCount > 0)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wronguessed {0} of {1}", guessCount, guessLimit);
-                        Console.ResetColor();
-                    }
-
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("Correct chars so far: ");                    
-                    Console.WriteLine(arrTestWord);
+                //Guess counting
+                if (right != true)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nYour guess is incorrect.");
                     Console.ResetColor();
-
-                    //Wrong guessed chars
-                    if (wrongGuessedChar.ToString() != "" )
+                    if (trigger)         //True if wrong char has not been used
                     {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.WriteLine("Guessed wrong with {1} ", wrongGuessedChar.Length, wrongGuessedChar.ToString());
-                        Console.ResetColor();                                                
+                        wrongGuessedChar.Append(guessChar);
+                        guessCount++;
                     }
+                    trigger = true;
+                }
+                else
+                {
+                    i--;
+                    right = false;
+                }
 
-                    //Break if done
-                    string tempWord1 = new string(arrSecretWord);
-                    string tempWord2 = new string(arrTestWord);
-                    if (tempWord1 == tempWord2)
-                    {
-                        i = guessLimit;
-                        //break;
-                    }
+                //Guess counting
+                if (guessCount > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wronguessed {0} of {1}", guessCount, guessLimit);
+                    Console.ResetColor();
+                }
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("Correct chars so far: ");
+                Console.WriteLine(arrTestWord);
+                Console.ResetColor();
+
+                //Wrong guessed chars
+                if (wrongGuessedChar.ToString() != "")
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("Guessed wrong with {1} ", wrongGuessedChar.Length, wrongGuessedChar.ToString());
+                    Console.ResetColor();
+                }
+
+                //Break if done
+                string tempWord1 = new string(arrSecretWord);
+                string tempWord2 = new string(arrTestWord);
+                if (tempWord1 == tempWord2)
+                {
+                    i = guessLimit;
+                    //break;
                 }
             }
 
