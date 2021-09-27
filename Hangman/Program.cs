@@ -20,7 +20,7 @@ namespace Hangman
             string secretWord = new string(arrSecretWord);
             int guessCount = 0, guessLimit = 10;
 
-            bool trigger = true;
+            bool trigger = true, trigger2 = true;
             bool right = false;
 
             //Count letters "secretWord"
@@ -68,9 +68,10 @@ namespace Hangman
                     if (guessWord == secretWord)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Guessed correct!");
+                        Console.WriteLine("\nGuessed correct!");
                         Console.ResetColor();
-                        i = guessLimit;                        
+                        i = guessLimit;
+                        trigger2 = false;
                     }
                     else
                     {
@@ -112,8 +113,8 @@ namespace Hangman
                     }                    
                 }
 
-                //Guess counting
-                if (right != true)
+                //If guessed wrong, add char to "wrongGuessedChar"
+                if (right != true && trigger2 == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nYour guess is incorrect.");
@@ -125,7 +126,7 @@ namespace Hangman
                     }
                     trigger = true;
                 }
-                else
+                else if(right && trigger2)
                 {
                     i--;
                     right = false;
@@ -145,7 +146,7 @@ namespace Hangman
                 Console.ResetColor();
 
                 //Wrong guessed chars
-                if (wrongGuessedChar.ToString() != "")
+                if (wrongGuessedChar.ToString() != "" && trigger2)
                 {
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine("Guessed wrong with {1} ", wrongGuessedChar.Length, wrongGuessedChar.ToString());
@@ -167,7 +168,7 @@ namespace Hangman
             {
                 //Wins the game
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("You found the word {0} and won the game!", secretWord);
+                Console.WriteLine("\nYou found the word {0} and won the game!", secretWord);
                 Console.ResetColor();
             }
             else
