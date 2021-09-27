@@ -87,7 +87,9 @@ namespace Hangman
 
                     if (temp.Contains(guessChar))
                     {
-                        Console.WriteLine("Already guessed!");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("\nAlready guessed!");
+                        Console.ResetColor();
                         trigger = false;
                         i--;
                     }
