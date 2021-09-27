@@ -40,13 +40,14 @@ namespace Hangman
             arrTestWord = tempString.ToCharArray();
 
             //Show secret word
+            /*
             Console.Write("Secret word is ");
             foreach(char items in arrSecretWord)
             {
                 Console.Write(items);
             }
             Console.WriteLine();
-
+            */
 
             //Playing the game
 
@@ -150,8 +151,8 @@ namespace Hangman
                     string tempWord2 = new string(arrTestWord);
                     if (tempWord1 == tempWord2)
                     {
-                        //i = guessLimit;
-                        break;
+                        i = guessLimit;
+                        //break;
                     }
                 }
             }
@@ -168,6 +169,7 @@ namespace Hangman
             {
                 //Lost the game
                 Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("The secret word is {0}.", secretWord);
                 Console.WriteLine("You lost, better luck next time!", secretWord);
                 Console.ResetColor();
             }
