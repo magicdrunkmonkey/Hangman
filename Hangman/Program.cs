@@ -20,6 +20,7 @@ namespace Hangman
             int guessCount = 0, guessLimit = 10;
 
             bool trigger = true;
+            bool right = false;
 
             //Count letters "secretWord"
             int wordLength = MyCodeTools.CountChar(arrSecretWord);             
@@ -53,7 +54,6 @@ namespace Hangman
 
             for (int i = 0; i < guessLimit; i++)
             {
-                //Copy char[] secretWord
                 char[] copy = arrSecretWord;                
 
                 
@@ -81,7 +81,7 @@ namespace Hangman
                 }                
                 else if (guessWord.Length == 1)
                 {
-                    bool right = false;
+                    
                     guessChar = char.Parse(guessWord);
                     string temp = wrongGuessedChar.ToString();
 
@@ -89,6 +89,7 @@ namespace Hangman
                     {
                         Console.WriteLine("Already guessed!");
                         trigger = false;
+                        i--;
                     }
                     else
                     {
@@ -106,6 +107,8 @@ namespace Hangman
                             }
                         }
                     }
+
+                    //Guess counting
                     if (right != true)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -142,8 +145,7 @@ namespace Hangman
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine("Guessed wrong with {1} ", wrongGuessedChar.Length, wrongGuessedChar.ToString());
-                        Console.ResetColor();
-                        Console.ResetColor();                        
+                        Console.ResetColor();                                                
                     }
 
                     //Break if done

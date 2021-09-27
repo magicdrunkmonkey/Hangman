@@ -14,7 +14,7 @@ namespace Hangman
             Random rnd = new Random();
             string[] arrayWords;
 
-            // Creating an List<T> of strings 
+            // Creating a List<T> of strings 
             List<string> SecretWord = new List<string>();
 
             // Adding elements to List 
