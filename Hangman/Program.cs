@@ -8,7 +8,7 @@ namespace Hangman
         static void Main(string[] args)
         {
             //Declare variables
-            bool keepLooping = true;
+            //bool keepLooping = true;
 
             char[] arrGuessWord;  
             char[] arrTestWord;    //Progress on guess word
