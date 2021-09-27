@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Hangman
 {
@@ -9,22 +10,21 @@ namespace Hangman
             //Declare variables
             bool keepLooping = true;
 
-
             char[] arrGuessWord;  
             char[] arrTestWord;    //Progress on guess word
-            char[] arrSecretWord;  //Word to guess on
+            char[] arrSecretWord = SecretWordList.SecretWord().ToCharArray();   //Convert "secretWord" to char array
 
             string guessWord;
             char guessChar;
-            string secretWord;
+            string secretWord = new string(arrSecretWord);
             int guessCount = 0, guessLimit = 10;
-                        
-            //Convert "secretWord" to char array
-            arrSecretWord = SecretWordList.SecretWord().ToCharArray();
 
             //Count letters "secretWord"
-            int wordLength = MyCodeTools.CountChar(arrSecretWord);
+            int wordLength = MyCodeTools.CountChar(arrSecretWord);             
             arrTestWord = new char[wordLength];
+
+            //Build string on wrong guessed chars
+            StringBuilder wrongGuessedChar = new StringBuilder("", wordLength);                        
 
             //Prepare "guessWord"
             arrGuessWord = arrSecretWord;            
@@ -51,42 +51,46 @@ namespace Hangman
             for (int i = 0; i < guessLimit; i++)
             {
                 //Copy char[] secretWord
-                char[] copy = arrSecretWord;
-                int guessIndex = 0;
+                char[] copy = arrSecretWord;                
 
-                Console.WriteLine("Guesscount: {0}", guessCount);
+                
                 Console.Write("Please enter a letter or word to guess: ");
                                
-                //Input a guess                
+                //Input a guess               
                 guessWord = Console.ReadLine().ToUpper();
 
                 if (guessWord.Length > 1)
                 {
-                    secretWord = new string(arrSecretWord);
+                    //secretWord = new string(arrSecretWord);
 
                     if (guessWord == secretWord)
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Guessed correct!");
-                        i = guessLimit;
+                        Console.ResetColor();
+                        i = guessLimit;                        
                     }
                     else
                     {
-                        Console.WriteLine("Wrong guess!");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Wrong word!");
+                        Console.ResetColor();
                         guessCount++;
                     }
                 
                 }
                 else if (guessWord.Length == 1)
-                {
-                    //Guess a Char
-                    //guessChar = char.Parse(Console.ReadLine().ToUpper());
+                {                    
                     guessChar = char.Parse(guessWord);
+
                     bool right = false;
                     for (int j = 0; j < copy.Length; j++)
                     {
                         if (copy[j] == guessChar)
                         {
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Your guess is correct.");
+                            Console.ResetColor();
                             arrTestWord[j] = guessChar;
                             right = true;
 
@@ -95,7 +99,10 @@ namespace Hangman
 
                     if (right != true)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Your guess is incorrect.");
+                        Console.ResetColor();
+                        wrongGuessedChar.Append(guessChar);
                         guessCount++;
                     }
                     else
@@ -104,7 +111,20 @@ namespace Hangman
                         right = false;
                     }
 
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wronguessed {0} of {1}", guessCount, guessLimit);
+                    Console.ResetColor();
+
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("Correct chars so far: ");                    
                     Console.WriteLine(arrTestWord);
+                                        
+                    if (wrongGuessedChar.ToString() != "")
+                    {
+                        Console.WriteLine("Guessed wrong with {1} ", wrongGuessedChar.Length, wrongGuessedChar.ToString());
+                        Console.ResetColor();
+                    }
 
                     //Break if done
                     string tempWord1 = new string(arrSecretWord);
@@ -115,7 +135,23 @@ namespace Hangman
                         break;
                     }
                 }
-            } 
+            }
+
+            //Endgame
+            if (guessCount < guessLimit)
+            {
+                //Wins the game
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("You found the word {0} and won the game!", secretWord);
+                Console.ResetColor();
+            }
+            else
+            {
+                //Lost the game
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("You lost, better luck next time!", secretWord);
+                Console.ResetColor();
+            }
         }
     }
 }
