@@ -53,16 +53,18 @@ namespace Hangman
                 */
 
                 //Playing the game
+                
 
                 for (int i = 0; i < guessLimit; i++)
                 {
                     char[] copy = arrSecretWord;
+                    
 
-
-                    Console.Write("Please enter a letter or a swedish word to guess: ");
-
-                    //Input a guess               
+                    //Input a guess
+                    Console.Write("Please enter a letter or a swedish word to guess: "); 
                     guessWord = Console.ReadLine().ToUpper();
+                    Console.Clear();
+                    Console.WriteLine("You guessed: "+guessWord);
 
                     if (guessWord.Length > 1)
                     {
